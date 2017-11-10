@@ -33,7 +33,7 @@ public class LoginActivity extends AppCompatActivity{
                             Arrays.asList(new AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build(),
                                     new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build(),
                                     new AuthUI.IdpConfig.Builder(AuthUI.FACEBOOK_PROVIDER).build()))
-                    .setLogo(R.mipmap.ic_launcher)
+                    .setLogo(R.drawable.cardlogo_accent)
                     .setTheme(R.style.AppTheme)
                     .build(),
                     RC_SIGN_IN);

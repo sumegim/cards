@@ -2,6 +2,7 @@ package hu.bme.sumegim.cards.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -55,6 +56,8 @@ public class HandFragment extends Fragment {
         recyclerViewWhiteCards.setLayoutManager(layoutManager);
         recyclerViewWhiteCards.setAdapter(whiteCardsAdapter);
 
+        recyclerViewWhiteCards.setItemAnimator(new DefaultItemAnimator());
+
         initCardsListener();
 
         return rootView;
@@ -64,7 +67,7 @@ public class HandFragment extends Fragment {
 
         for (int i = 0; i < 7; i++) {
             CahWhiteCard newCard = new CahWhiteCard(i, "Card_" + (i+1), ((CardsAgainstActivity)getActivity()).getUid());
-            whiteCardsAdapter.addWhiteCard(newCard, "");
+            whiteCardsAdapter.addWhiteCard(newCard);
         }
 
     }

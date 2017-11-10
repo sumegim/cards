@@ -5,8 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -54,33 +52,10 @@ public class WhiteCardsAdapter extends RecyclerView.Adapter<WhiteCardsAdapter.Vi
         final CahWhiteCard tmpWhiteCard = whiteCardsList.get(position);
         viewHolder.tvText.setText(tmpWhiteCard.getText());
 
-        setAnimation(viewHolder.itemView, position);
-
         viewHolder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_out_right);
-                //animation.setFillAfter(true);
-                animation.setAnimationListener(new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationStart(Animation animation) {
-
-                    }
-
-                    @Override
-                    public void onAnimationEnd(Animation animation) {
-                        removeWhiteCard(tmpWhiteCard, "");
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animation animation) {
-
-                    }
-                });
-
-                v.startAnimation(animation);
-                //removeWhiteCard(tmpWhiteCard, "");
-
+                removeWhiteCard(tmpWhiteCard, viewHolder.getAdapterPosition());
                 return false;
             }
         });
@@ -91,23 +66,23 @@ public class WhiteCardsAdapter extends RecyclerView.Adapter<WhiteCardsAdapter.Vi
         return whiteCardsList.size();
     }
 
-    public void addWhiteCard(CahWhiteCard whiteCard, String key){
+    public void addWhiteCard(CahWhiteCard whiteCard){
         whiteCardsList.add(whiteCard);
-        notifyDataSetChanged();
+        notifyItemInserted(whiteCardsList.size()-1);
     }
 
-    public void removeWhiteCard(CahWhiteCard whiteCard, String key){
+    public void removeWhiteCard(CahWhiteCard whiteCard, int position){
         whiteCardsList.remove(whiteCard);
-        notifyDataSetChanged();
+        notifyItemRemoved(position);
+
+        //auto draw mock
+        //CahWhiteCard newCard = new CahWhiteCard(999, "Card_999");
+        //insertWhiteCard(newCard, position);
     }
 
-    private void setAnimation(View viewToAnimate, int position) {
-        if (position > lastPosition) {
-            Animation animation = AnimationUtils.loadAnimation(context,
-                    android.R.anim.slide_in_left);
-            viewToAnimate.startAnimation(animation);
-            lastPosition = position;
-        }
+    public void insertWhiteCard(CahWhiteCard whiteCard, int position){
+        whiteCardsList.add(position, whiteCard);
+        notifyItemInserted(position);
     }
 
 }

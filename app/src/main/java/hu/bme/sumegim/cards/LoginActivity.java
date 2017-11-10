@@ -3,7 +3,6 @@ package hu.bme.sumegim.cards;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
@@ -22,7 +21,7 @@ public class LoginActivity extends AppCompatActivity{
 
         if (auth.getCurrentUser() != null)
         {
-            Toast.makeText(this, "AUTH" + auth.getCurrentUser().getDisplayName(), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "AUTH" + auth.getCurrentUser().getDisplayName(), Toast.LENGTH_SHORT).show();
             startActivity(new Intent(LoginActivity.this,
                     MainActivity.class));
             finish();
@@ -48,15 +47,15 @@ public class LoginActivity extends AppCompatActivity{
         if (requestCode == RC_SIGN_IN){
             if (resultCode == RESULT_OK){
                 //user logged in
-                Toast.makeText(this, "AUTH" + auth.getCurrentUser().getDisplayName(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "AUTH" + auth.getCurrentUser().getDisplayName(), Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(LoginActivity.this,
                         MainActivity.class));
                 finish();
             }
             else{
                 //user not authenticated
-                Toast.makeText(this, "USER NOT AUTHENTICATED", Toast.LENGTH_SHORT).show();
-
+                //Toast.makeText(this, "USER NOT AUTHENTICATED", Toast.LENGTH_SHORT).show();
+                finish();
             }
         }
 

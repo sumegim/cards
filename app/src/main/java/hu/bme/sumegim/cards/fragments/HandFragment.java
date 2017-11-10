@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import hu.bme.sumegim.cards.R;
 import hu.bme.sumegim.cards.adapters.WhiteCardsAdapter;
 import hu.bme.sumegim.cards.data.CahWhiteCard;
+import hu.bme.sumegim.cards.games.CardsAgainstActivity;
 
 /**
  * Created by mars on 2017.11.09..
@@ -62,7 +63,7 @@ public class HandFragment extends Fragment {
     private void initCardsListener() {
 
         for (int i = 0; i < 7; i++) {
-            CahWhiteCard newCard = new CahWhiteCard(i, "Card_" + (i+1));
+            CahWhiteCard newCard = new CahWhiteCard(i, "Card_" + (i+1), ((CardsAgainstActivity)getActivity()).getUid());
             whiteCardsAdapter.addWhiteCard(newCard, "");
         }
 

@@ -23,9 +23,11 @@ public class WhiteCardsAdapter extends RecyclerView.Adapter<WhiteCardsAdapter.Vi
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView tvText;
+        public final View cardView;
 
         public ViewHolder(View itemView){
             super(itemView);
+            cardView = itemView;
             tvText = (TextView) itemView.findViewById(R.id.tvText);
         }
     }
@@ -49,9 +51,39 @@ public class WhiteCardsAdapter extends RecyclerView.Adapter<WhiteCardsAdapter.Vi
 
     @Override
     public void onBindViewHolder(final ViewHolder viewHolder, final int position) {
-        CahWhiteCard tmpWhiteCard = whiteCardsList.get(position);
+        final CahWhiteCard tmpWhiteCard = whiteCardsList.get(position);
         viewHolder.tvText.setText(tmpWhiteCard.getText());
+
         setAnimation(viewHolder.itemView, position);
+
+        viewHolder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_out_right);
+                //animation.setFillAfter(true);
+                animation.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        removeWhiteCard(tmpWhiteCard, "");
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+
+                v.startAnimation(animation);
+                //removeWhiteCard(tmpWhiteCard, "");
+
+                return false;
+            }
+        });
     }
 
     @Override
@@ -61,6 +93,11 @@ public class WhiteCardsAdapter extends RecyclerView.Adapter<WhiteCardsAdapter.Vi
 
     public void addWhiteCard(CahWhiteCard whiteCard, String key){
         whiteCardsList.add(whiteCard);
+        notifyDataSetChanged();
+    }
+
+    public void removeWhiteCard(CahWhiteCard whiteCard, String key){
+        whiteCardsList.remove(whiteCard);
         notifyDataSetChanged();
     }
 

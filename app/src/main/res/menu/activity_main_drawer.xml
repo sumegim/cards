@@ -5,7 +5,7 @@
         <menu>
             <item
                 android:id="@+id/nav_cards_against"
-                android:icon="@drawable/ic_menu_slideshow"
+                android:icon="@drawable/cards"
                 android:title="Cards Against Humanity" />
         </menu>
     </item>
@@ -14,7 +14,7 @@
         <menu>
             <item
                 android:id="@+id/nav_logout"
-                android:icon="@drawable/ic_menu_share"
+                android:icon="@drawable/exit_to_app"
                 android:title="Logout" />
         </menu>
     </item>

@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import hu.bme.sumegim.cards.fragments.HandFragment;
 import hu.bme.sumegim.cards.fragments.PlaceholderFragment;
+import hu.bme.sumegim.cards.fragments.TableFragment;
 
 /**
  * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -27,8 +28,8 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         // Return a PlaceholderFragment (defined as a static inner class below).
 
         if (position == 0) return HandFragment.newInstance();
-        //if position == 1 return Black card fragment.newinstance
-        //if position == 2 return Tablefragment.newinstance
+        if (position == 1) return TableFragment.newInstance();
+
 
         return PlaceholderFragment.newInstance(position + 1);
     }
@@ -36,18 +37,16 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         // Show 3 total pages.
-        return 3;
+        return 2;
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
         switch (position) {
             case 0:
-                return "SECTION 1";
+                return "HAND";
             case 1:
-                return "SECTION 2";
-            case 2:
-                return "SECTION 3";
+                return "TABLE";
         }
         return null;
     }

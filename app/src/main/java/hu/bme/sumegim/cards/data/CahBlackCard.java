@@ -1,34 +1,30 @@
 package hu.bme.sumegim.cards.data;
 
 /**
- * Created by mars on 2017.11.09..
+ * Created by mars on 2017.11.10..
  */
 
-public class CahWhiteCard {
+public class CahBlackCard {
     private int id;
     private String text;
     private String ownerUid;
-    private boolean revealed;
 
-    public CahWhiteCard(){
+    public CahBlackCard(){
         id = -1;
         text = "";
         ownerUid = "";
-        revealed = false;
     }
 
-    public CahWhiteCard(int id, String text){
+    public CahBlackCard(int id, String text){
         this.id = id;
         this.text = text;
         ownerUid = "";
-        revealed = false;
     }
 
-    public CahWhiteCard(int id, String text, String uid){
+    public CahBlackCard(int id, String text, String uid){
         this.id = id;
         this.text = text;
         this.ownerUid = uid;
-        revealed = false;
     }
 
     public int getId() {
@@ -53,13 +49,5 @@ public class CahWhiteCard {
 
     public void setOwnerUid(String ownerUid) {
         this.ownerUid = ownerUid;
-    }
-
-    public boolean isRevealed(){
-        return revealed;
-    }
-
-    public void setRevealed(boolean r){
-        revealed = r;
     }
 }

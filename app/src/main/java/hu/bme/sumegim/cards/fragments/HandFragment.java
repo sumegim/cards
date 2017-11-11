@@ -19,24 +19,14 @@ import hu.bme.sumegim.cards.games.CardsAgainstActivity;
  */
 
 public class HandFragment extends Fragment {
-    /**
-     * The fragment argument representing the section number for this
-     * fragment.
-     */
-
 
     public HandFragment() {
     }
 
-    /**
-     * Returns a new instance of this fragment for the given section
-     * number.
-     */
     public static HandFragment newInstance() {
         HandFragment fragment = new HandFragment();
         return fragment;
     }
-
 
     private RecyclerView recyclerViewWhiteCards;
     private WhiteCardsAdapter whiteCardsAdapter;

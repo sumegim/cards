@@ -29,6 +29,7 @@ public class TableAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public TableAdapter(Context context) {
         this.context = context;
         this.whiteCards = new ArrayList<CahWhiteCard>();
+        this.blackCard = new CahBlackCard(-1, "LONG PRESS ME TO DRAW A CARD");
     }
 
     public TableAdapter(CahBlackCard header, List<CahWhiteCard> listItems)

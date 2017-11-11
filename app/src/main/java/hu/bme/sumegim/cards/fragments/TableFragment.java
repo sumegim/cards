@@ -9,10 +9,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import hu.bme.sumegim.cards.R;
 import hu.bme.sumegim.cards.adapters.TableAdapter;
 import hu.bme.sumegim.cards.data.CahBlackCard;
-import hu.bme.sumegim.cards.data.CahWhiteCard;
 import hu.bme.sumegim.cards.games.CardsAgainstActivity;
 
 /**
@@ -56,20 +61,54 @@ public class TableFragment extends Fragment{
 
         recyclerViewTableWhiteCards.setItemAnimator(new DefaultItemAnimator());
 
+
         initCardsListener();
 
         return rootView;
     }
 
-    private void initCardsListener() {
+    private void initCardsListener_mock() {
 
-        CahBlackCard newBCard = new CahBlackCard(-1, "TableBlackCard_" + 1, ((CardsAgainstActivity)getActivity()).getUid());
+        CahBlackCard newBCard = new CahBlackCard(-1, "LONG PRESS ME TO DRAW A CARD", ((CardsAgainstActivity)getActivity()).getUid());
         tableAdapter.addBlackCard(newBCard);
 
+        /*
         for (int i = 0; i < 7; i++) {
             CahWhiteCard newCard = new CahWhiteCard(i, "TableCard_" + (i+1), ((CardsAgainstActivity)getActivity()).getUid());
             tableAdapter.addWhiteCard(newCard);
         }
-
+    */
     }
+
+    private void initCardsListener() {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("cards/cards_against_base/whiteCards");
+        ref.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                //CahWhiteCard newCard = new CahWhiteCard(0, dataSnapshot.getValue(String.class));
+                //tableAdapter.addWhiteCard(newCard);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                // remove post from adapter
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
 }

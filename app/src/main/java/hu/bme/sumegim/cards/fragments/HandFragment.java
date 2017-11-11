@@ -1,6 +1,7 @@
 package hu.bme.sumegim.cards.fragments;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -48,7 +49,18 @@ public class HandFragment extends Fragment {
 
         recyclerViewWhiteCards.setItemAnimator(new DefaultItemAnimator());
 
-        initCardsListener();
+        final FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Snackbar.make(view, "Drawing Cards", Snackbar.LENGTH_LONG)
+                //        .setAction("Action", null).show();
+
+                fab.hide();
+                initCardsListener();
+            }
+        });
+
 
         return rootView;
     }

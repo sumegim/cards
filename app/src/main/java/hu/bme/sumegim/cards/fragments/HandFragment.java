@@ -10,6 +10,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
+
 import hu.bme.sumegim.cards.R;
 import hu.bme.sumegim.cards.adapters.WhiteCardsAdapter;
 import hu.bme.sumegim.cards.data.CahWhiteCard;
@@ -48,6 +56,7 @@ public class HandFragment extends Fragment {
         recyclerViewWhiteCards.setAdapter(whiteCardsAdapter);
 
         recyclerViewWhiteCards.setItemAnimator(new DefaultItemAnimator());
+        initCardsDownloader();
 
         final FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -56,16 +65,20 @@ public class HandFragment extends Fragment {
                 //Snackbar.make(view, "Drawing Cards", Snackbar.LENGTH_LONG)
                 //        .setAction("Action", null).show();
 
-                fab.hide();
-                initCardsListener();
+                try {
+                    fab.hide();
+                    whiteCardsAdapter.drawStartingHand();
+                }catch (Exception e){
+                    fab.show();
+                }
+
             }
         });
-
 
         return rootView;
     }
 
-    private void initCardsListener() {
+    private void initCardsListener_mock() {
 
         for (int i = 0; i < 7; i++) {
             CahWhiteCard newCard = new CahWhiteCard(i, "Card_" + (i+1), ((CardsAgainstActivity)getActivity()).getUid());
@@ -73,4 +86,38 @@ public class HandFragment extends Fragment {
         }
 
     }
+
+
+    private void initCardsDownloader(){
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("cards/cards_against_base/whiteCards");
+        whiteCardsAdapter.whiteDeck = new ArrayList<>();
+
+        ref.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                whiteCardsAdapter.whiteDeck.add(dataSnapshot.getValue(String.class));
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                // remove post from adapter
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
 }
+

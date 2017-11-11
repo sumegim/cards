@@ -7,22 +7,35 @@ package hu.bme.sumegim.cards.data;
 public class CahBlackCard {
     private int id;
     private String text;
+    private int pick;
     private String ownerUid;
 
     public CahBlackCard(){
         id = -1;
+        pick = 1;
         text = "";
         ownerUid = "";
     }
 
-    public CahBlackCard(int id, String text){
-        this.id = id;
+    public CahBlackCard(int pick, String text){
+        id = -1;
+        this.pick = pick;
         this.text = text;
         ownerUid = "";
     }
 
-    public CahBlackCard(int id, String text, String uid){
+    public CahBlackCard(int id, int pick, String text){
         this.id = id;
+        this.pick = pick;
+        this.text = text;
+        ownerUid = "";
+    }
+
+
+
+    public CahBlackCard(int id, int pick, String text, String uid){
+        this.id = id;
+        this.pick = pick;
         this.text = text;
         this.ownerUid = uid;
     }

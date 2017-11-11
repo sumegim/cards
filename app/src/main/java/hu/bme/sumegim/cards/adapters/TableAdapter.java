@@ -10,9 +10,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import hu.bme.sumegim.cards.R;
 import hu.bme.sumegim.cards.data.CahBlackCard;
@@ -22,6 +27,9 @@ public class TableAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_ITEM = 1;
+
+    public List<CahBlackCard> blackDeck;
+
     CahBlackCard blackCard;
     List<CahWhiteCard> whiteCards;
     Context context;
@@ -29,7 +37,8 @@ public class TableAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public TableAdapter(Context context) {
         this.context = context;
         this.whiteCards = new ArrayList<CahWhiteCard>();
-        this.blackCard = new CahBlackCard(-1, "LONG PRESS ME TO DRAW A CARD");
+        this.blackDeck = new ArrayList<>();
+        this.blackCard = new CahBlackCard(1, "LONG PRESS ME TO DRAW A CARD");
     }
 
     public TableAdapter(CahBlackCard header, List<CahWhiteCard> listItems)
@@ -69,9 +78,16 @@ public class TableAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             VHheader.cardView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    // HEADER LISTENER IDE
 
-                    addBlackCard(new CahBlackCard(-1, "New Black card"));
+                    CahBlackCard newBlackCard = drawBlackCard();
+                    newBlackCard.setOwnerUid(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+                    FirebaseDatabase.getInstance().getReference().child("bc_post").removeValue();
+
+                    String key = FirebaseDatabase.getInstance().getReference().child("bc_post").push().getKey();
+                    FirebaseDatabase.getInstance().getReference().child("bc_post").child(key).setValue(newBlackCard);
+
+                    FirebaseDatabase.getInstance().getReference().child("posts").removeValue();
                     removeWhiteCards();
 
                     return false;
@@ -97,13 +113,29 @@ public class TableAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 }
             });
 
-            //VHitem.iv.setBackgroundResource(currentItem.getId());
+            VHitem.cardView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    if (currentItem.isRevealed()){
+                        Toast.makeText(context, currentItem.getOwnerUid() + " +1" , Toast.LENGTH_SHORT).show();
+                    }
+
+                    return false;
+                }
+            });
         }
     }
 
     public void addWhiteCard(CahWhiteCard whiteCard){
         whiteCards.add(whiteCard);
-        notifyItemInserted(whiteCards.size()-1);
+        notifyItemInserted(whiteCards.size());
+        //notifyDataSetChanged();
+    }
+
+    public CahBlackCard drawBlackCard(){
+        int r = new Random().nextInt(blackDeck.size());
+        addBlackCard(blackDeck.get(r));
+        return blackDeck.get(r);
     }
 
     public void addBlackCard(CahBlackCard blackCard){

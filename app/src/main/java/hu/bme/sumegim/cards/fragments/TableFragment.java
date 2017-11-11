@@ -18,6 +18,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import hu.bme.sumegim.cards.R;
 import hu.bme.sumegim.cards.adapters.TableAdapter;
 import hu.bme.sumegim.cards.data.CahBlackCard;
+import hu.bme.sumegim.cards.data.CahWhiteCard;
 import hu.bme.sumegim.cards.games.CardsAgainstActivity;
 
 /**
@@ -69,7 +70,7 @@ public class TableFragment extends Fragment{
 
     private void initCardsListener_mock() {
 
-        CahBlackCard newBCard = new CahBlackCard(-1, "LONG PRESS ME TO DRAW A CARD", ((CardsAgainstActivity)getActivity()).getUid());
+        CahBlackCard newBCard = new CahBlackCard(-1, 1, "LONG PRESS ME TO DRAW A CARD", ((CardsAgainstActivity)getActivity()).getUid());
         tableAdapter.addBlackCard(newBCard);
 
         /*
@@ -81,12 +82,15 @@ public class TableFragment extends Fragment{
     }
 
     private void initCardsListener() {
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("cards/cards_against_base/whiteCards");
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("posts");
+        DatabaseReference blackDeckRef = FirebaseDatabase.getInstance().getReference("cards/cards_against_base/blackCards");
+        DatabaseReference blackCardListener = FirebaseDatabase.getInstance().getReference("bc_post");
+
         ref.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                //CahWhiteCard newCard = new CahWhiteCard(0, dataSnapshot.getValue(String.class));
-                //tableAdapter.addWhiteCard(newCard);
+                CahWhiteCard newCard = dataSnapshot.getValue(CahWhiteCard.class);
+                tableAdapter.addWhiteCard(newCard);
             }
 
             @Override
@@ -97,6 +101,63 @@ public class TableFragment extends Fragment{
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
                 // remove post from adapter
+                tableAdapter.removeWhiteCards();
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        blackDeckRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                CahBlackCard bc = dataSnapshot.getValue(CahBlackCard.class);
+                tableAdapter.blackDeck.add(bc);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        blackCardListener.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                CahBlackCard newBlackcard = dataSnapshot.getValue(CahBlackCard.class);
+                tableAdapter.addBlackCard(newBlackcard);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
             }
 
             @Override

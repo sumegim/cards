@@ -117,7 +117,10 @@ public class TableAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 @Override
                 public boolean onLongClick(View v) {
                     if (currentItem.isRevealed()){
-                        Toast.makeText(context, currentItem.getOwnerUid() + " +1" , Toast.LENGTH_SHORT).show();
+                        if (blackCard.getOwnerUid().equals(FirebaseAuth.getInstance().getCurrentUser().getUid()))
+                            Toast.makeText(context, currentItem.getOwnerUid() + " +1" , Toast.LENGTH_SHORT).show();
+                        else
+                            Toast.makeText(context, currentItem.getOwnerUid(), Toast.LENGTH_SHORT).show();
                     }
 
                     return false;

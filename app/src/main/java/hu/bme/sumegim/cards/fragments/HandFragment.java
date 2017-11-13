@@ -1,6 +1,7 @@
 package hu.bme.sumegim.cards.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -41,6 +42,19 @@ public class HandFragment extends Fragment {
     private WhiteCardsAdapter whiteCardsAdapter;
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (whiteCardsAdapter.getWhiteCardsList() != null)
+            outState.putParcelableArrayList("key", new ArrayList<CahWhiteCard>(whiteCardsAdapter.getWhiteCardsList()));
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_hand, container, false);
@@ -51,6 +65,11 @@ public class HandFragment extends Fragment {
         GridLayoutManager layoutManager = new GridLayoutManager(recyclerViewWhiteCards.getContext(), 2);
         //layoutManager.setReverseLayout(true);
         //layoutManager.setStackFromEnd(true);
+
+        if (savedInstanceState != null){
+            whiteCardsAdapter.setWhiteCardsList(savedInstanceState.<CahWhiteCard>getParcelableArrayList("key"));
+            whiteCardsAdapter.notifyDataSetChanged();
+        }
 
         recyclerViewWhiteCards.setLayoutManager(layoutManager);
         recyclerViewWhiteCards.setAdapter(whiteCardsAdapter);
@@ -74,6 +93,8 @@ public class HandFragment extends Fragment {
 
             }
         });
+        if (savedInstanceState != null)
+            fab.hide();
 
         return rootView;
     }

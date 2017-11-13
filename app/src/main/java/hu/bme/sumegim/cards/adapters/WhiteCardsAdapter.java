@@ -36,6 +36,11 @@ public class WhiteCardsAdapter extends RecyclerView.Adapter<WhiteCardsAdapter.Vi
 
     private Context context;
     public List<String> whiteDeck;
+
+    public List<CahWhiteCard> getWhiteCardsList() {
+        return whiteCardsList;
+    }
+
     private List<CahWhiteCard> whiteCardsList;
 
     public WhiteCardsAdapter(Context context) {
@@ -81,7 +86,12 @@ public class WhiteCardsAdapter extends RecyclerView.Adapter<WhiteCardsAdapter.Vi
         addWhiteCard(newCard);
     }
 
+    public void setWhiteCardsList(List<CahWhiteCard> whiteCardsList) {
+        this.whiteCardsList = whiteCardsList;
+    }
+
     @Override
+
     public int getItemCount() {
         return whiteCardsList.size();
     }

@@ -7,6 +7,7 @@ package hu.bme.sumegim.cards.adapters;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
 import hu.bme.sumegim.cards.fragments.HandFragment;
 import hu.bme.sumegim.cards.fragments.PlaceholderFragment;
@@ -16,7 +17,7 @@ import hu.bme.sumegim.cards.fragments.TableFragment;
  * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
  * one of the sections/tabs/pages.
  */
-public class SectionsPagerAdapter extends FragmentPagerAdapter {
+public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
 
     public SectionsPagerAdapter(FragmentManager fm) {
         super(fm);
@@ -36,7 +37,6 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        // Show 3 total pages.
         return 2;
     }
 

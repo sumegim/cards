@@ -1,10 +1,13 @@
 package hu.bme.sumegim.cards.data;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by mars on 2017.11.09..
  */
 
-public class CahWhiteCard {
+public class CahWhiteCard implements Parcelable{
     private int id;
     private String text;
     private String ownerUid;
@@ -30,6 +33,25 @@ public class CahWhiteCard {
         this.ownerUid = uid;
         revealed = false;
     }
+
+    protected CahWhiteCard(Parcel in) {
+        id = in.readInt();
+        text = in.readString();
+        ownerUid = in.readString();
+        revealed = in.readByte() != 0;
+    }
+
+    public static final Creator<CahWhiteCard> CREATOR = new Creator<CahWhiteCard>() {
+        @Override
+        public CahWhiteCard createFromParcel(Parcel in) {
+            return new CahWhiteCard(in);
+        }
+
+        @Override
+        public CahWhiteCard[] newArray(int size) {
+            return new CahWhiteCard[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -61,5 +83,17 @@ public class CahWhiteCard {
 
     public void setRevealed(boolean r){
         revealed = r;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(text);
+        dest.writeString(ownerUid);
     }
 }

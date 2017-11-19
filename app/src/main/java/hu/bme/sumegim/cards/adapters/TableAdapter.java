@@ -6,6 +6,7 @@ package hu.bme.sumegim.cards.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,7 +74,7 @@ public class TableAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         if(holder instanceof VHHeader)
         {
             VHHeader VHheader = (VHHeader)holder;
-            VHheader.txtTitle.setText(blackCard.getText());
+            VHheader.txtTitle.setText(Html.fromHtml(blackCard.getText()));
 
             VHheader.cardView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override

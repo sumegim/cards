@@ -22,6 +22,7 @@ import com.google.android.gms.tasks.Task;
 import com.squareup.picasso.Picasso;
 
 import hu.bme.sumegim.cards.games.CardsAgainstActivity;
+import hu.bme.sumegim.cards.games.SpymasterActivity;
 import hu.bme.sumegim.cards.transformations.CircleTransform;
 
 public class MainActivity extends BaseActivity
@@ -121,6 +122,10 @@ public class MainActivity extends BaseActivity
 
         if (id == R.id.nav_cards_against){
             startActivity(new Intent(MainActivity.this, CardsAgainstActivity.class));
+        }
+
+        if (id == R.id.nav_spymaster){
+            startActivity(new Intent(MainActivity.this, SpymasterActivity.class));
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

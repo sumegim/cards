@@ -7,6 +7,23 @@
                 android:id="@+id/nav_cards_against"
                 android:icon="@drawable/cards"
                 android:title="Cards Against Humanity" />
+            <item
+                android:id="@+id/nav_spymaster"
+                android:icon="@drawable/apps"
+                android:title="Codenames" />
+            <item
+                android:id="@+id/nav_kingscup"
+                android:icon="@drawable/crown"
+                android:title="King's cup" />
+            <item
+                android:id="@+id/nav_hotseat"
+                android:icon="@drawable/fire"
+                android:title="Hot seat" />
+            <item
+                android:id="@+id/nav_spyfall"
+                android:icon="@drawable/martini"
+                android:title="Spyfall" />
+
         </menu>
     </item>
 

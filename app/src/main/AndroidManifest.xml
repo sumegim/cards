@@ -23,6 +23,10 @@
         <activity
             android:name=".games.CardsAgainstActivity"
             android:label="@string/title_activity_cards_against"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".games.SpymasterActivity"
+            android:label="@string/title_activity_spymaster"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
